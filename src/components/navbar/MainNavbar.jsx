@@ -3,6 +3,7 @@ import Avatar from "@/assets/img/image-avatar.png";
 import MenuIcon from "@/components/icons/MenuIcon";
 import CartIcon from "@/components/icons/CartIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
+import NavLink from "@/components/navbar/NavLink";
 import { useState } from "react";
 
 const MainNavbar = () => {
@@ -22,28 +23,31 @@ const MainNavbar = () => {
   };
 
   return (
-    <header className="container mx-auto flex items-center gap-8 bg-gray-200 py-6 px-4">
-      <button className="md:hidden" onClick={handleOpenMenu}>
-        <MenuIcon />
-      </button>
-      <img src={Logo} alt="Logo" className="mr-auto h-5 md:mr-0" />
-      <nav className={navClass}>
-        <button className="mb-10 md:hidden" onClick={handleCloseMenu}>
-          <CloseIcon />
+    <>
+      <header className="container mx-auto flex items-center gap-8 p-4 md:p-0">
+        <button className="md:hidden" onClick={handleOpenMenu}>
+          <MenuIcon />
         </button>
-        <a href="">Collections</a>
-        <a href="">Men</a>
-        <a href="">Women</a>
-        <a href="">About</a>
-        <a href="">Contact</a>
-      </nav>
-      <div className="flex gap-4">
-        <button>
-          <CartIcon />
-        </button>
-        <img src={Avatar} alt="Avatar" className="w-10" />
-      </div>
-    </header>
+        <img src={Logo} alt="Logo" className="mr-auto h-5 md:mr-0" />
+        <nav className={navClass}>
+          <button className="mb-10 md:hidden" onClick={handleCloseMenu}>
+            <CloseIcon />
+          </button>
+          <NavLink text="Collections" />
+          <NavLink text="Men" />
+          <NavLink text="Women" />
+          <NavLink text="About" />
+          <NavLink text="Contact" />
+        </nav>
+        <div className="flex gap-4">
+          <button>
+            <CartIcon />
+          </button>
+          <img src={Avatar} alt="Avatar" className="w-10" />
+        </div>
+      </header>
+      <span className="container mx-auto hidden h-[3px] w-full bg-gray-500 md:block"></span>
+    </>
   );
 };
 
