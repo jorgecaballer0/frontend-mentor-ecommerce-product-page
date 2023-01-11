@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PrevIcon from "@/components/icons/PrevIcon";
 import NextIcon from "@/components/icons/NextIcon";
 
@@ -7,9 +7,15 @@ const SlideProducts = ({
   ARRAY_IMG_SMALL = [],
   isOpenModal = false,
   handleCloseModal = null,
+  handleOpenModal = () => {},
   ...props
 }) => {
+  const btnSlider = useRef(null);
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    isOpenModal && btnSlider.current.classList.remove("md:hidden");
+  }, isOpenModal);
 
   const handleClickNext = () => {
     index === ARRAY_IMGS.length - 1 ? setIndex(0) : setIndex(index + 1);
@@ -30,9 +36,13 @@ const SlideProducts = ({
         <img
           src={ARRAY_IMGS[index]}
           alt=""
-          className="aspect-[16/13] w-full md:aspect-[16/17] md:rounded-md"
+          className="aspect-[16/13] w-full md:aspect-[16/18] md:cursor-default md:rounded-md"
+          onClick={handleOpenModal}
         />
-        <div className="absolute top-1/2 flex w-full -translate-y-1/2 justify-between px-4">
+        <div
+          ref={btnSlider}
+          className="absolute top-1/2 flex w-full -translate-y-1/2 justify-between px-4 md:hidden "
+        >
           <button
             className="grid h-10 w-10 place-items-center rounded-full bg-white"
             onClick={handleClickPrev}
@@ -47,13 +57,25 @@ const SlideProducts = ({
           </button>
         </div>
       </div>
-      {ARRAY_IMG_SMALL.map((smallImg) => (
-        <img
-          key={smallImg}
-          src={smallImg}
-          alt=""
-          className="hidden md:block md:rounded-md"
-        />
+      {ARRAY_IMG_SMALL.map((smallImg, i) => (
+        <div
+          key={i}
+          onClick={() => {
+            setIndex(i);
+          }}
+          className="relative cursor-pointer overflow-hidden rounded-md"
+        >
+          <img
+            src={smallImg}
+            alt=""
+            className="hidden md:block md:rounded-md"
+          />
+          <span
+            className={`absolute top-0 h-full w-full hover:bg-[rgba(255,255,255,.5)] ${
+              i === index && "bg-[rgba(255,255,255,.5)]"
+            }`}
+          ></span>
+        </div>
       ))}
     </section>
   );
